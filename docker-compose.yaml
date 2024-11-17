@@ -1,21 +1,35 @@
-version: "1"
-services: 
-  app1: 
+version: "3.8"
+services:
+  app1:
     build: .
     environment:
       - APP_NAME=App1
     ports:
-      - "3001:3000"
-  app2: 
+      - "3001:3000"  # Expose app1 on port 3001 of host
+  app2:
     build: .
     environment:
       - APP_NAME=App2
     ports:
-      - "3002:3000"
-  app3: 
+      - "3002:3000"  # Expose app2 on port 3002 of host
+  app3:
     build: .
     environment:
       - APP_NAME=App3
     ports:
-      - "3003:3000"
-  
+      - "3003:3000"  # Expose app3 on port 3003 of host
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Mount nginx.conf from host to container
+      - ./nginx-certs:/nginx-certs
+
+    ports:
+      # - "8080:8080"  # Expose nginx on port 8080 of host
+      - "443:443"  # Expose port 443 for HTTPS
+
+    depends_on:
+      - app1
+      - app2
+      - app3
