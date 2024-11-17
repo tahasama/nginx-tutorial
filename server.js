@@ -1,20 +1,22 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const path = require('path')
+const path = require("path")
 const port = 3000
 
-// app.get('/', function (req, res) {
-//   res.send('Hello World!');
+// app.get("/", function (req, res) {
+//   res.send("Hello World!");
 // });
 
-app.use('/images',express.static(path.join(__dirname,'images')))
-app.use('/styles',express.static(path.join(__dirname,'styles')))
+const appenv = process.env.APP_NAME
 
-app.use('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'index.html'))
-    console.log('req served by node.js')
+app.use("/images",express.static(path.join(__dirname,"images")))
+app.use("/styles",express.static(path.join(__dirname,"styles")))
+
+app.use("/",(req,res)=>{
+    res.sendFile(path.join(__dirname,"index.html"))
+    console.log(`req served by node.js appname : ${appenv}`)
 })
 
 app.listen(port, () =>{
-  console.log(`Example app listening on port ${port}!`);
+  console.log(`Example ${appenv} listening on port ${port}!`);
 });
