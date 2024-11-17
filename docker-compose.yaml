@@ -26,7 +26,7 @@ services:
       - ./nginx-certs:/nginx-certs
 
     ports:
-      # - "8080:8080"  # Expose nginx on port 8080 of host
+      - "8080:8080"  # Expose nginx on port 8080 of host
       - "443:443"  # Expose port 443 for HTTPS
 
     depends_on:
